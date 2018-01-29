@@ -3,6 +3,7 @@ package com.report;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.ExtentXReporter;
 
 
 public class Reporting {
@@ -10,8 +11,13 @@ public class Reporting {
 	static boolean flag = false;
 	
 	public static void main(String[] args) {
+		
+		String mongoURL = "192.168.1.186:27017";
+		String serverURL = "http://192.168.1.186:1337";
+		String projectName = "Test";
+		
 		Reporting testing = new Reporting();
-		testing.initReports("D:\\CLCS\\ServiceProject", "PravinONE");
+		testing.initReports("D:\\CLCS\\ServiceProject", "PravinONE", mongoURL, serverURL, projectName);
 		
 		testing.createParentTest("Parent");
 		testing.createTest("Testing");
@@ -69,12 +75,37 @@ public class Reporting {
 			reporter = new ExtentReports();
 			reporter.attachReporter(htmlReporter);
 	}
+	
+	public void initReports(String folderPath, String reportName, String mongoDBUrl, String serverUrl, String projectName){
+		ExtentXReporter xReporter = new ExtentXReporter(mongoDBUrl);
+		xReporter.config().setServerUrl(serverUrl);
+		xReporter.config().setReportName(reportName);
+		xReporter.config().setProjectName(projectName);
+
+		htmlReporter = new ExtentHtmlReporter(folderPath + "/"+reportName+".html");
+		htmlReporter.config().setReportName(reportName);
+		htmlReporter.config().setDocumentTitle(reportName);
+		reporter = new ExtentReports();
+		reporter.attachReporter(htmlReporter, xReporter);
+}
+	
+	
 
 	public void createTest(String testCaseName){
 		if(parent == null){
 			test = reporter.createTest(testCaseName);
 		}else{
 			test = parent.createNode(testCaseName);
+		}
+	}
+	
+	
+	
+	public void createTest(String testCaseName, String description){
+		if(parent == null){
+			test = reporter.createTest(testCaseName, description);
+		}else{
+			test = parent.createNode(testCaseName, description);
 		}
 	}
  
