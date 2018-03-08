@@ -10,15 +10,24 @@ public class Reporting extends Verify {
 	}
 	
 	public static void main(String[] args) {
+		String response = "{ \"ProjectId\":\"5a9691288660a3106467aa71\", \"BranchName\":\"\", \"DistributionName\":\"New Distribution\", \"Description\":\"This is a test Distribution\", \"TocPath\":\"\" }";
+		String request = "{    \"modelValidationErrors\":    [             {          \"field\": \"Description\",          \"message\": [\"\"]       },             {          \"field\": \"ProjectName\",          \"message\": [\"\"]       },             {          \"field\": \"RepositoryId\",          \"message\": [\"\"]       },             {          \"field\": \"PublishedPath\",          \"message\":          [             \"\",             \"\"          ]       },             {          \"field\": \"TypeOfContent\",          \"message\": [\"\"]       },             {          \"field\": \"RepositoryName\",          \"message\": [\"\"]       }    ],    \"message\": \"Model validation error occured\",    \"exceptionDetail\": null,    \"httpStatusCode\": null,    \"errorCode\": 0 }";
+		
+		
+		//	new JsonWriter(new StringWriter().append(request));
+		System.out.println();
+	
 		Reporting r = new Reporting();
 		r.initReports(System.getProperty("user.dir"), "new");
 		
-		String c = "1516622358596";
-		String s = "1516622358596";
 		
 		r.createTest("NewTest");
-		r.verify(c, s, c+" did not match "+s);
+	
+		r.reportRequest("CreateDistribution", request);
+		r.reportResponse("CreateDistribution", response);
+		
 		r.reportFlusher();
+		
 		
 	}
 
