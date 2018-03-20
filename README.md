@@ -1,7 +1,7 @@
 ## ExtentForSoapUI.
 
 
-OpenSource reporting for SoapUI.
+OpenSource Extent Reporting API built for SoapUI.
 
 ### Download
 
