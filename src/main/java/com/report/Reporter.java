@@ -3,7 +3,6 @@ package com.report;
 import java.io.File;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
 import org.apache.log4j.Logger;
 
 import com.aventstack.extentreports.ExtentReports;

@@ -6,7 +6,6 @@ public class Verify extends Reporter {
 
 	public Verify(Logger logger) {
 		super(logger);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
