@@ -1,15 +1,22 @@
 package com.report;
 
+import org.apache.log4j.Logger;
+
 public class Verify extends Reporter {
+
+	public Verify(Logger logger) {
+		super(logger);
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @author Pravin Lokeshwar
 	 * 
 	 */
-	
-	
+
 	/**
-	 * This method verifies two objects and returns true if equal and reports message.
+	 * This method verifies two objects and returns true if equal and reports
+	 * message.
 	 * 
 	 * @param expected
 	 * @param actual
@@ -17,9 +24,9 @@ public class Verify extends Reporter {
 	 * @param errorMessage
 	 * @return True if objects equal
 	 */
-	
+
 	public boolean verifyEquals(Object expected, Object actual, String successMessage, String errorMessage) {
-		
+
 		if (expected.equals(actual)) {
 			pass("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> SUCCESS : "
 					+ successMessage);
@@ -31,9 +38,10 @@ public class Verify extends Reporter {
 		return false;
 
 	}
-	
+
 	/**
-	 * This method verifies two objects and returns true if not equal and reports message.
+	 * This method verifies two objects and returns true if not equal and
+	 * reports message.
 	 * 
 	 * @param expected
 	 * @param actual
@@ -41,7 +49,7 @@ public class Verify extends Reporter {
 	 * @param errorMessage
 	 * @return True if objects not equal
 	 */
-	
+
 	public boolean verifyNotEquals(Object expected, Object actual, String successMessage, String errorMessage) {
 
 		if (!expected.equals(actual)) {
@@ -55,9 +63,11 @@ public class Verify extends Reporter {
 		return false;
 
 	}
-	
+
 	/**
-	 * This method verifies if the object is null and returns true if null and reports message.
+	 * This method verifies if the object is null and returns true if null and
+	 * reports message.
+	 * 
 	 * @param actual
 	 * @param successMessage
 	 * @param errorMessage
@@ -65,10 +75,8 @@ public class Verify extends Reporter {
 	 */
 	public boolean verifyIsNull(Object actual, String successMessage, String errorMessage) {
 
-		
 		if (actual == null) {
-			pass("<b>Expected</b> : null<br> <b>Actual</b> : " + actual + "<br> SUCCESS : "
-					+ successMessage);
+			pass("<b>Expected</b> : null<br> <b>Actual</b> : " + actual + "<br> SUCCESS : " + successMessage);
 			return true;
 		} else {
 			fail("<b>Expected</b> : null<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
@@ -77,21 +85,21 @@ public class Verify extends Reporter {
 		return false;
 
 	}
-	
-	
+
 	/**
-	 * This method verifies if the object is not null and returns true if not null and reports message.
+	 * This method verifies if the object is not null and returns true if not
+	 * null and reports message.
+	 * 
 	 * @param actual
 	 * @param successMessage
 	 * @param errorMessage
 	 * @return True if object is not null
 	 */
-	
+
 	public boolean verifyNotNull(Object actual, String successMessage, String errorMessage) {
 
 		if (actual != null) {
-			pass("<b>Expected</b> : NOT NULL<br> <b>Actual</b> : " + actual + "<br> SUCCESS : "
-					+ successMessage);
+			pass("<b>Expected</b> : NOT NULL<br> <b>Actual</b> : " + actual + "<br> SUCCESS : " + successMessage);
 			return true;
 		} else {
 			fail("<b>Expected</b> : NOT NULL<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
@@ -100,9 +108,11 @@ public class Verify extends Reporter {
 		return false;
 
 	}
-	
+
 	/**
-	 * This method verifies if the object is true and returns true if true and reports message.
+	 * This method verifies if the object is true and returns true if true and
+	 * reports message.
+	 * 
 	 * @param actual
 	 * @param successMessage
 	 * @param errorMessage
@@ -111,8 +121,7 @@ public class Verify extends Reporter {
 	public boolean verifyTrue(boolean actual, String successMessage, String errorMessage) {
 
 		if (actual) {
-			pass("<b>Expected</b> : TRUE<br> <b>Actual</b> : " + actual + "<br> SUCCESS : "
-					+ successMessage);
+			pass("<b>Expected</b> : TRUE<br> <b>Actual</b> : " + actual + "<br> SUCCESS : " + successMessage);
 			return true;
 		} else {
 			fail("<b>Expected</b> : TRUE<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
@@ -121,22 +130,22 @@ public class Verify extends Reporter {
 		return false;
 
 	}
-	
 
 	/**
 	 * 
-	 * This method verifies if the object is false and returns true if false and reports message.
+	 * This method verifies if the object is false and returns true if false and
+	 * reports message.
+	 * 
 	 * @param actual
 	 * @param successMessage
 	 * @param errorMessage
 	 * @return True if object is false
 	 */
-	
+
 	public boolean verifyFalse(boolean actual, String successMessage, String errorMessage) {
 
 		if (!actual) {
-			pass("<b>Expected</b> : FALSE<br> <b>Actual</b> : " + actual + "<br> SUCCESS : "
-					+ successMessage);
+			pass("<b>Expected</b> : FALSE<br> <b>Actual</b> : " + actual + "<br> SUCCESS : " + successMessage);
 			return true;
 		} else {
 			fail("<b>Expected</b> : FALSE<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
@@ -145,10 +154,10 @@ public class Verify extends Reporter {
 		return false;
 
 	}
-	
-	
+
 	/**
-	 * This method verifies object against object and returns true if equal and reports messages.
+	 * This method verifies object against object and returns true if equal and
+	 * reports messages.
 	 * 
 	 * @param expected
 	 * @param actual
@@ -172,13 +181,14 @@ public class Verify extends Reporter {
 	}
 
 	/**
-	 * This method verifies object against object and returns true if equal and reports only error messages.
+	 * This method verifies object against object and returns true if equal and
+	 * reports only error messages.
 	 * 
 	 * @param expected
 	 * @param actual
 	 * @param errorMessage
 	 * @return True if both objects are equal.
-	 
+	 * 
 	 */
 	public boolean verify(Object expected, Object actual, String errorMessage) {
 
@@ -192,7 +202,6 @@ public class Verify extends Reporter {
 		return false;
 	}
 
-	
 	/**
 	 * This method verifies Text against Text and reports messages.
 	 * 
@@ -201,7 +210,7 @@ public class Verify extends Reporter {
 	 * @param successMessage
 	 * @param errorMessage
 	 * @return True if both Strings are equal.
-	 
+	 * 
 	 */
 
 	public boolean verifyText(String expected, String actual, String successMessage, String errorMessage) {
@@ -248,7 +257,7 @@ public class Verify extends Reporter {
 	 * @param successMessage
 	 * @param errorMessage
 	 * @return True if both Strings are equal.
-	 
+	 * 
 	 */
 	public boolean verifyTextIgnoreCase(String expected, String actual, String successMessage, String errorMessage) {
 
@@ -272,8 +281,8 @@ public class Verify extends Reporter {
 	 * @param actual
 	 * @param errorMessage
 	 * @return True if both Strings are equal.
-	 
-	*/
+	 * 
+	 */
 	public boolean verifyTextIgnoreCase(String expected, String actual, String errorMessage) {
 
 		if (expected.equalsIgnoreCase(actual)) {
@@ -294,7 +303,7 @@ public class Verify extends Reporter {
 	 * @param successMessage
 	 * @param errorMessage
 	 * @return True if both objects are equal.
-	 
+	 * 
 	 */
 	public boolean verifyBoolean(boolean expected, boolean actual, String successMessage, String errorMessage) {
 
@@ -317,7 +326,7 @@ public class Verify extends Reporter {
 	 * @param actual
 	 * @param errorMessage
 	 * @return True if both objects are equal.
-	 
+	 * 
 	 */
 	public boolean verifyBoolean(boolean expected, boolean actual, String errorMessage) {
 
@@ -341,7 +350,7 @@ public class Verify extends Reporter {
 	 * @param successMessage
 	 * @param errorMessage
 	 * @return True if expected contains actual.
-	 
+	 * 
 	 */
 
 	public boolean verifyContainsText(String expected, String actual, String successMessage, String errorMessage) {
@@ -351,15 +360,16 @@ public class Verify extends Reporter {
 					+ successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : [" + expected + "] is not available in <b>Actual</b> : [" + actual + "]<br> ERROR : "
-					+ errorMessage);
+			fail("<b>Expected</b> : [" + expected + "] is not available in <b>Actual</b> : [" + actual
+					+ "]<br> ERROR : " + errorMessage);
 
 		}
 		return false;
 	}
 
 	/**
-	 * This method verifies if the expected text contains actual text and reports only error messages.
+	 * This method verifies if the expected text contains actual text and
+	 * reports only error messages.
 	 * 
 	 * @param expected
 	 * @param actual
@@ -372,14 +382,40 @@ public class Verify extends Reporter {
 			pass("<b>Expected</b> : [" + expected + "] is available in <b>Actual</b> : [" + actual + "]");
 			return true;
 		} else {
-			fail("<b>Expected</b> : [" + expected + "] is not available in <b>Actual</b> : [" + actual + "]<br> ERROR : "
-					+ errorMessage);
+			fail("<b>Expected</b> : [" + expected + "] is not available in <b>Actual</b> : [" + actual
+					+ "]<br> ERROR : " + errorMessage);
 
 		}
 		return false;
 
 	}
-	
-	
+
+	public boolean verifyGreaterThan(int expected, int actual, String successMessage, String errorMessage) {
+
+		if (actual > expected) {
+			pass("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> SUCCESS : "
+					+ successMessage);
+			return true;
+		} else {
+			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+		}
+
+		return false;
+
+	}
+
+	public boolean verifyLesserThan(int expected, int actual, String successMessage, String errorMessage) {
+
+		if (actual < expected) {
+			pass("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> SUCCESS : "
+					+ successMessage);
+			return true;
+		} else {
+			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+		}
+
+		return false;
+
+	}
 
 }

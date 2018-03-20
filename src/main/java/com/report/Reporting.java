@@ -1,13 +1,13 @@
 package com.report;
 
+import org.apache.log4j.Logger;
+
 public class Reporting extends Verify {
 	
-	/**
-	 * This constructor is for creating instance of Reporting and using the inherited methods.
-	 */
-	public Reporting() {
-		// TODO Auto-generated constructor stub
+	public Reporting(Logger logger) {
+		super(logger);
 	}
+	
 	
 	public static void main(String[] args) {
 		String response = "{ \"ProjectId\":\"5a9691288660a3106467aa71\", \"BranchName\":\"\", \"DistributionName\":\"New Distribution\", \"Description\":\"This is a test Distribution\", \"TocPath\":\"\" }";
@@ -16,16 +16,14 @@ public class Reporting extends Verify {
 		
 		//	new JsonWriter(new StringWriter().append(request));
 		System.out.println();
-	
-		Reporting r = new Reporting();
-		r.initReports(System.getProperty("user.dir"), "new");
+		Logger log = null;
+		Reporting r = new Reporting(null);
+		r.initReports(System.getProperty("user.dir"), "new", true);
 		
 		
 		r.createTest("NewTest");
-	
-		r.reportRequest("CreateDistribution", request);
-		r.reportResponse("CreateDistribution", response);
-		
+		Object o = null;
+		r.verifyNotNull(o, "I am not null", "I am null");
 		r.reportFlusher();
 		
 		
