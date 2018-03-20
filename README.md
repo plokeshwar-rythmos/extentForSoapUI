@@ -114,4 +114,4 @@ Download latest copy from [HERE](https://github.com/plokeshwar-rythmos/extentRep
 	assert true == context.reporter.verifyEquals(expectedMessage, actualMessage, expectedMessage+" Error Triggered", expectedMessage+" Error Did Not Trigger")
 
 ### Report Example
-Click [Here](https://drive.google.com/open?id=14cwUxr58GtS7OCoJcYp3H6L_9BoA_aK7 "Report Example for TestCase") for TestCase Report Example
+Click [Here](https://drive.google.com/open?id=14cwUxr58GtS7OCoJcYp3H6L_9BoA_aK7 "Report Example for TestCase") to download the HTML for TestCase Report Example
