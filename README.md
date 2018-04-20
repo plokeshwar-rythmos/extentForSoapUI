@@ -5,16 +5,12 @@ OpenSource Extent Reporting API built for SoapUI.
 
 ### Download
 
-Download latest copy from [HERE](https://github.com/plokeshwar-rythmos/extentReportParser) e.g. : SoapReporterV4.2.jar
+Download latest copy from [HERE](https://github.com/plokeshwar-rythmos/extentForSoapUI/blob/master/jars/SoapReporterV4.5.1.jar) e.g. : SoapReporterV4.5.1.jar
 
 ### Requirements
 *Jars*
 
-1. bson-3.3.0.jar
-2. freemarker-2.3.23.jar
-3. mongodb-driver-3.0.3.jar
-4. extentreports-3.0.7.jar
-5. SoapReporterV4.*.jar (See the download section)
+1. SoapReporterV4.*.jar (See the download section)
 
 *Java*
 
