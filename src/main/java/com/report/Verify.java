@@ -2,6 +2,8 @@ package com.report;
 
 import org.apache.log4j.Logger;
 
+import com.exceptions.AssertionException;
+
 public class Verify extends Reporter {
 
 	public Verify(Logger logger) {
@@ -31,7 +33,9 @@ public class Verify extends Reporter {
 					+ successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			
+		//	fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
 
 		return false;
@@ -56,7 +60,8 @@ public class Verify extends Reporter {
 					+ successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+		//	fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
 
 		return false;
@@ -73,12 +78,13 @@ public class Verify extends Reporter {
 	 * @return True if object is null
 	 */
 	public boolean verifyIsNull(Object actual, String successMessage, String errorMessage) {
-
+		String expected = "null";
 		if (actual == null) {
 			pass("<b>Expected</b> : null<br> <b>Actual</b> : " + actual + "<br> SUCCESS : " + successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : null<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			//fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
 
 		return false;
@@ -96,12 +102,13 @@ public class Verify extends Reporter {
 	 */
 
 	public boolean verifyNotNull(Object actual, String successMessage, String errorMessage) {
-
+		String expected = "Not Null";
 		if (actual != null) {
 			pass("<b>Expected</b> : NOT NULL<br> <b>Actual</b> : " + actual + "<br> SUCCESS : " + successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : NOT NULL<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			//fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
 
 		return false;
@@ -118,12 +125,12 @@ public class Verify extends Reporter {
 	 * @return True if object is true
 	 */
 	public boolean verifyTrue(boolean actual, String successMessage, String errorMessage) {
-
+		boolean expected = true;
 		if (actual) {
 			pass("<b>Expected</b> : TRUE<br> <b>Actual</b> : " + actual + "<br> SUCCESS : " + successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : TRUE<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
 
 		return false;
@@ -142,13 +149,15 @@ public class Verify extends Reporter {
 	 */
 
 	public boolean verifyFalse(boolean actual, String successMessage, String errorMessage) {
-
+		boolean expected = false;
 		if (!actual) {
 			pass("<b>Expected</b> : FALSE<br> <b>Actual</b> : " + actual + "<br> SUCCESS : " + successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : FALSE<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+		//	fail("<b>Expected</b> : FALSE<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
+		
 
 		return false;
 
@@ -172,7 +181,8 @@ public class Verify extends Reporter {
 					+ successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+		//	fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
 
 		return false;
@@ -196,7 +206,8 @@ public class Verify extends Reporter {
 			return true;
 
 		} else {
-			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			//fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
 		return false;
 	}
@@ -219,7 +230,8 @@ public class Verify extends Reporter {
 					+ successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			//fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 
 		}
 		return false;
@@ -240,7 +252,8 @@ public class Verify extends Reporter {
 			return true;
 
 		} else {
-			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			//fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
 
 		return false;
@@ -265,7 +278,8 @@ public class Verify extends Reporter {
 					+ successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			//fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
 
 		return false;
@@ -289,7 +303,8 @@ public class Verify extends Reporter {
 			return true;
 
 		} else {
-			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			//fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
 		return false;
 	}
@@ -311,7 +326,8 @@ public class Verify extends Reporter {
 					+ successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			//fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 
 		}
 		return false;
@@ -333,7 +349,8 @@ public class Verify extends Reporter {
 			pass("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "");
 			return true;
 		} else {
-			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			//fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
 
 		return false;
@@ -359,8 +376,8 @@ public class Verify extends Reporter {
 					+ successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : [" + expected + "] is not available in <b>Actual</b> : [" + actual
-					+ "]<br> ERROR : " + errorMessage);
+			//fail("<b>Expected</b> : [" + expected + "] is not available in <b>Actual</b> : [" + actual	+ "]<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+" Not Available in Actual : "+actual+". Message : "+errorMessage));
 
 		}
 		return false;
@@ -381,8 +398,8 @@ public class Verify extends Reporter {
 			pass("<b>Expected</b> : [" + expected + "] is available in <b>Actual</b> : [" + actual + "]");
 			return true;
 		} else {
-			fail("<b>Expected</b> : [" + expected + "] is not available in <b>Actual</b> : [" + actual
-					+ "]<br> ERROR : " + errorMessage);
+			//fail("<b>Expected</b> : [" + expected + "] is not available in <b>Actual</b> : [" + actual+ "]<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+" Not Available in Actual : "+actual+". Message : "+errorMessage));
 
 		}
 		return false;
@@ -396,7 +413,8 @@ public class Verify extends Reporter {
 					+ successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			//fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
 
 		return false;
@@ -410,11 +428,13 @@ public class Verify extends Reporter {
 					+ successMessage);
 			return true;
 		} else {
-			fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			//fail("<b>Expected</b> : " + expected + "<br> <b>Actual</b> : " + actual + "<br> ERROR : " + errorMessage);
+			fail(new AssertionException("Expected : "+expected+", Actual : "+actual+", Message : "+errorMessage));
 		}
 
 		return false;
 
 	}
+	
 
 }

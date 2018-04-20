@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.markuputils.Markup;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.ExtentXReporter;
 import com.google.gson.GsonBuilder;
@@ -168,7 +169,7 @@ public class Reporter extends ConfigLoader {
 	 * @param description
 	 */
 	public void pass(String description) {
-		log.info("PASS : " + description);
+		log.info("PASS : " + removeTags(description));
 		test.pass(description);
 	}
 
@@ -178,8 +179,17 @@ public class Reporter extends ConfigLoader {
 	 * @param description
 	 */
 	public void fail(String description) {
-		log.fatal("FAIL : " + description);
 		test.fail("<div style=\"color: red;\">" + description + "</div>");
+	}
+	
+	public void failWithBold(String description){
+		fail("<b style=\"font-size: 16px\";>"+description+"</b>");
+	}
+	
+	
+	public void fail(Throwable ex) {
+		failWithBold(ex.getMessage());
+		test.fail(ex);
 	}
 
 	/**
@@ -188,10 +198,42 @@ public class Reporter extends ConfigLoader {
 	 * @param description
 	 */
 	public void info(String description) {
-		log.info("INFO : " + description);
+		log.info("INFO : " + removeTags(description));
 		test.info(description);
 	}
+	
+	public void info(Markup description) {
+		log.info("INFO : " + description);
+		
+		test.info(description);
+	}
+	
+	
+	
+	public void reportRequestXml(String xml, String msg){
+		test.info("<details style=\"font-size: 17px;\"><summary style=\"color: brown;\"><b>"+msg+" - REQUEST</b></summary><pre><code><textarea disabled=\"\" style=\"height: 228px;\">" + xml + "</textarea></code></pre></details>");
+	}
+	
+	public void reportResponseXml(String xml, String msg){
+		test.info("<details style=\"font-size: 17px;\"><summary style=\"color: brown;\"><b>"+msg+" - RESPONSE</b></summary><pre><code><textarea disabled=\"\" style=\"height: 228px;\">" + xml + "</textarea></code></pre></details>");
+	}
+	
+	public void skip(String description){
+		log.info(removeTags(description));	
+		test.skip(description);
+	}
+	
+	public void setAuthor(String author){
+		log.info("Setting Author "+author);	
+		test.assignAuthor(author);
+	}
+	
+	public void setCategory(String category){
+		log.info("Setting Category "+category);	
+		test.assignCategory(category);
+	}
 
+	
 	/**
 	 * This method flushes report to the active extent instance.
 	 */
@@ -217,5 +259,18 @@ public class Reporter extends ConfigLoader {
 		log.info("Adding Response to the Report.");
 		reportRequestResponse(shortMsg + "-Response", response);
 	}
+	
+	public String removeTags(String data){
+		
+		return data.replaceAll("<br>", "").replaceAll("<b>", "").replaceAll("</b>", "");
+		
+	}
+	
+	public static void main(String[] args) {
+		String t = new Reporter(null).removeTags("PASS : <b>Expected</b> : 2<br> <b>Actual</b> : 2<br> SUCCESS : The event id is: 11 and the event status is:Passed ");
+		System.out.println(t);
+	}
+	
+	
 
 }
