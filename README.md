@@ -109,7 +109,7 @@ Download latest copy from [HERE](https://github.com/plokeshwar-rythmos/extentFor
 
 	assert true == context.reporter.verifyEquals(expectedMessage, actualMessage, expectedMessage+" Error Triggered", expectedMessage+" Error Did Not Trigger")
 
-###Table reporting
+***Table reporting***
 context.reporter.createTable("EXPECTED", "ACTUAL", "ELEMENT", "STATUS")
 context.reporter.insertRow("abc", "abc", "match", "pass")
 context.reporter.insertRow("john", "johnv", "first", "fail")
