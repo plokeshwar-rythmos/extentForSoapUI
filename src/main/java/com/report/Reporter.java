@@ -1,6 +1,8 @@
 package com.report;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -32,6 +34,10 @@ public class Reporter extends ConfigLoader {
 	ExtentReports reporter;
 	ExtentTest parent;
 	ExtentTest test;
+	String tableAppender = "";
+
+	static String failStyle = "style=\"background-color: lightcyan;font-size: 17px;color: red;\"";
+	static String passStyle = "style=\"background-color: lightcyan;\"";
 
 	/**
 	 * Method creates instance of extent and creates html with reportName and in
@@ -181,12 +187,11 @@ public class Reporter extends ConfigLoader {
 	public void fail(String description) {
 		test.fail("<div style=\"color: red;\">" + description + "</div>");
 	}
-	
-	public void failWithBold(String description){
-		fail("<b style=\"font-size: 16px\";>"+description+"</b>");
+
+	public void failWithBold(String description) {
+		fail("<b style=\"font-size: 16px\";>" + description + "</b>");
 	}
-	
-	
+
 	public void fail(Throwable ex) {
 		failWithBold(ex.getMessage());
 		test.fail(ex);
@@ -201,39 +206,40 @@ public class Reporter extends ConfigLoader {
 		log.info("INFO : " + removeTags(description));
 		test.info(description);
 	}
-	
+
 	public void info(Markup description) {
 		log.info("INFO : " + description);
-		
+
 		test.info(description);
 	}
-	
-	
-	
-	public void reportRequestXml(String xml, String msg){
-		test.info("<details style=\"font-size: 17px;\"><summary style=\"color: brown;\"><b>"+msg+" - REQUEST</b></summary><pre><code><textarea disabled=\"\" style=\"height: 228px;\">" + xml + "</textarea></code></pre></details>");
+
+	public void reportRequestXml(String xml, String msg) {
+		test.info("<details style=\"font-size: 17px;\"><summary style=\"color: brown;\"><b>" + msg
+				+ " - REQUEST</b></summary><pre><code><textarea disabled=\"\" style=\"height: 228px;\">" + xml
+				+ "</textarea></code></pre></details>");
 	}
-	
-	public void reportResponseXml(String xml, String msg){
-		test.info("<details style=\"font-size: 17px;\"><summary style=\"color: brown;\"><b>"+msg+" - RESPONSE</b></summary><pre><code><textarea disabled=\"\" style=\"height: 228px;\">" + xml + "</textarea></code></pre></details>");
+
+	public void reportResponseXml(String xml, String msg) {
+		test.info("<details style=\"font-size: 17px;\"><summary style=\"color: brown;\"><b>" + msg
+				+ " - RESPONSE</b></summary><pre><code><textarea disabled=\"\" style=\"height: 228px;\">" + xml
+				+ "</textarea></code></pre></details>");
 	}
-	
-	public void skip(String description){
-		log.info(removeTags(description));	
+
+	public void skip(String description) {
+		log.info(removeTags(description));
 		test.skip(description);
 	}
-	
-	public void setAuthor(String author){
-		log.info("Setting Author "+author);	
+
+	public void setAuthor(String author) {
+		log.info("Setting Author " + author);
 		test.assignAuthor(author);
 	}
-	
-	public void setCategory(String category){
-		log.info("Setting Category "+category);	
+
+	public void setCategory(String category) {
+		log.info("Setting Category " + category);
 		test.assignCategory(category);
 	}
 
-	
 	/**
 	 * This method flushes report to the active extent instance.
 	 */
@@ -259,18 +265,96 @@ public class Reporter extends ConfigLoader {
 		log.info("Adding Response to the Report.");
 		reportRequestResponse(shortMsg + "-Response", response);
 	}
-	
-	public String removeTags(String data){
-		
+
+	public String removeTags(String data) {
+
 		return data.replaceAll("<br>", "").replaceAll("<b>", "").replaceAll("</b>", "");
-		
+
+	}
+
+	public void createTable(List<String> headers) {
+		tableAppender = "<table><tbody><tr>";
+		for (String header : headers) {
+			tableAppender = tableAppender + insertTh(header);
+		}
+		tableAppender = tableAppender + "</tr>";
+	}
+
+	public void closeTable() {
+		tableAppender = tableAppender + "</tbody></table>";
+
+		if (tableAppender.contains("Failed") || tableAppender.contains("fail")) {
+			test.fail(tableAppender);
+		} else {
+			test.info(tableAppender);
+		}
+	}
+
+	public void insertRow(List<String> headers, List<String> rowData) throws Exception {
+
+		if (headers.size() != rowData.size())
+			throw new Exception(
+					"Header and Column sizes do not match.  Make sure the header count matches the column count");
+
+		tableAppender = tableAppender + "<tr>";
+		for (String data : rowData) {
+			tableAppender = tableAppender + insertTd(data);
+		}
+		tableAppender = tableAppender + "</tr>";
+	}
+
+	public void createTable(String expected, String actual, String elementName, String status) {
+		tableAppender = "<table><tbody>" + tableAppender + "<tr>"+insertTh(expected)+insertTh(actual)+ insertTh(elementName)+insertTh(status);
+		tableAppender = tableAppender + "</tr>";
+	}
+
+	public void insertRow(String expected, String actual, String elementName, String status) {
+
+		if (status.equalsIgnoreCase("fail") || status.equalsIgnoreCase("failed")) {
+			tableAppender = tableAppender + "<tr " + failStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd(status.toUpperCase())+"</tr>";
+		} else {
+			tableAppender = tableAppender + "<tr " + passStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd(status)+"</tr>";
+		}
 	}
 	
-	public static void main(String[] args) {
-		String t = new Reporter(null).removeTags("PASS : <b>Expected</b> : 2<br> <b>Actual</b> : 2<br> SUCCESS : The event id is: 11 and the event status is:Passed ");
-		System.out.println(t);
+	private String insertTh(String data) {
+		return "<th style=\"width: 25%;\">"+data+"</th>";
+	}
+	
+	private String insertTd(String data) {
+		return "<td style=\"width: 25%;\">"+data+"</td>";
 	}
 	
 	
+
+	public static void main(String[] args) throws Exception {
+		Reporter report = new Reporter(null);
+		List<String> header = new ArrayList<String>();
+		header.add("Request");
+		header.add("Response");
+		header.add("Element");
+		header.add("Status");
+		report.createTable(header);
+
+		List<String> row = new ArrayList<String>();
+		row.add("Pravin");
+		row.add("Pravin");
+		row.add("FirstName");
+		row.add("Pass");
+
+		report.insertRow(header, row);
+
+		List<String> row1 = new ArrayList<String>();
+		row1.add("Pravin");
+		row1.add("Pravin");
+		row1.add("FirstName");
+		row1.add("Pass");
+
+		report.insertRow(header, row1);
+
+		report.closeTable();
+
+		System.out.println(report.tableAppender);
+	}
 
 }

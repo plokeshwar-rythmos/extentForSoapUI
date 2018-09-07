@@ -13,7 +13,6 @@ public class ConfigLoader {
 	
 	public ConfigLoader(Logger logger) {
 		this.log = logger;
-		// TODO Auto-generated constructor stub
 	}
 
 	
