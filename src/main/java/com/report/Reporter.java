@@ -123,7 +123,6 @@ public class Reporter extends ConfigLoader {
 	public void createTest(String testCaseName) {
 		if (parent == null) {
 			log.info("Creating test without parent.");
-
 			test = reporter.createTest(testCaseName);
 		} else {
 			System.out.println("Creating test from parent : " + parent);
@@ -326,6 +325,39 @@ public class Reporter extends ConfigLoader {
 		}
 	}
 	
+	public void insertRowVerifyEquals(String expected, String actual, String elementName) {
+		if (actual.equals(expected)) {
+			tableAppender.append("<tr " + passStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd("Passed  - Equal")+"</tr>");
+		} else {
+			tableAppender.append("<tr " + failStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd("Failed - Equal")+"</tr>");
+		}
+	}
+	
+	public void insertRowVerifyEqualIgnorecase(String expected, String actual, String elementName) {
+		if (expected.equalsIgnoreCase(actual)) {
+			tableAppender.append("<tr " + passStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd("Passed  - IgnoreCase")+"</tr>");
+		} else {
+			tableAppender.append("<tr " + failStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd("Failed - IgnoreCase")+"</tr>");
+		}
+	}
+	
+	public void insertRowVerifyContains(String expected, String actual, String elementName) {
+		if (expected.contains(actual)) {
+			tableAppender.append("<tr " + passStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd("Passed - Contains")+"</tr>");
+		} else {
+			tableAppender.append("<tr " + failStyle  + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd("Failed - Contains")+"</tr>");
+		}
+	}
+	
+	public void insertRowVerifyNotContains(String expected, String actual, String elementName) {
+		if (!actual.contains(expected)) {
+			tableAppender.append("<tr " + passStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd("Passed - NotContains")+"</tr>");
+		} else {
+			tableAppender.append("<tr " + failStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd("Failed - NotContains")+"</tr>");
+		}
+		
+	}
+	
 	
 	private String insertTh(String data) {
 		return "<th style=\"width: 25%;\">"+data+"</th>";
@@ -351,21 +383,20 @@ public class Reporter extends ConfigLoader {
 	
 
 	public static void main(String[] args) throws Exception {
-		Reporter report = new Reporter(null);
-		List<String> header = new ArrayList<String>();
-		header.add("Request");
-		header.add("Response");
-		header.add("Element");
-		header.add("Status");
-		report.createTable(header);
-
-		List<String> row = new ArrayList<String>();
-		row.add("Pravin");
-		row.add("Pravin");
-		row.add("FirstName");
-		row.add("Pass");
+		Logger log = Logger.getLogger("Test");
+		Reporter report = new Reporter(log);
+		report.initReports(System.getProperty("user.dir"), "Testing");
+		report.createTest("Awesome");
+		report.createTable();
+		report.insertRowVerifyEquals("pravinn", "pravin", "firstName");
+		report.insertRowVerifyEqualIgnorecase("pravin", "Pravin", "firstName");
+		report.insertRowVerifyContains("pravin", "ravi", "firstName");
+		report.insertRowVerifyNotContains("pravin", "rini", "firstName");
 
 		report.closeTable();
+
+
+
 
 		System.out.println(report.tableAppender);
 	}

@@ -5,7 +5,7 @@ OpenSource Extent Reporting API built for SoapUI.
 
 ### Download
 
-Download latest copy from [HERE](https://github.com/plokeshwar-rythmos/extentForSoapUI/blob/master/jars/SoapReporterV4.6.2.jar) e.g. : SoapReporterV4.6.2.jar
+Download latest copy from [HERE](https://github.com/plokeshwar-rythmos/extentForSoapUI/blob/master/jars/SoapReporterV4.6.4.jar) e.g. : SoapReporterV4.6.4.jar
 
 ### Requirements
 *Jars*
