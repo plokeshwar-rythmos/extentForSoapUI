@@ -5,7 +5,7 @@ OpenSource Extent Reporting API built for SoapUI.
 
 ### Download
 
-Download latest copy from [HERE](https://github.com/plokeshwar-rythmos/extentForSoapUI/blob/master/jars/SoapReporterV4.5.1.jar) e.g. : SoapReporterV4.5.1.jar
+Download latest copy from [HERE](https://github.com/plokeshwar-rythmos/extentForSoapUI/blob/master/jars/SoapReporterV4.6.1.jar) e.g. : SoapReporterV4.6.1.jar
 
 ### Requirements
 *Jars*
@@ -108,6 +108,12 @@ Download latest copy from [HERE](https://github.com/plokeshwar-rythmos/extentFor
 	assert true == context.reporter.verifyEquals(expectedField, actualField, expectedField+" Error Field Triggered", expectedField+" Error Field Did not Trigger")
 
 	assert true == context.reporter.verifyEquals(expectedMessage, actualMessage, expectedMessage+" Error Triggered", expectedMessage+" Error Did Not Trigger")
+
+### Table Reporting Example
+	context.reporter.createTable("EXPECTED", "ACTUAL", "ELEMENT", "STATUS")
+	context.reporter.insertRow("abc", "abc", "match", "pass")
+	context.reporter.insertRow("john", "johnv", "first", "fail")
+	context.reporter.closeTable()
 
 ### Report Example
 Click [Here](https://drive.google.com/open?id=14cwUxr58GtS7OCoJcYp3H6L_9BoA_aK7 "Report Example for TestCase") to download the HTML for TestCase Report Example
