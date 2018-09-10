@@ -337,11 +337,15 @@ public class Reporter extends ConfigLoader {
 	
 	private String verifyEquals(Object expected, Object actual) {
 		
-		if(expected.equals(actual))
-			return "Passed";
-		
-		
+		if(expected instanceof String) {
+			if(expected.toString().equalsIgnoreCase(actual.toString()))
+				return "Passed";
+		}else {
+			if(expected.equals(actual))
+				return "Passed";
+		}
 		return "Failed";
+	
 	}
 	
 	
