@@ -34,7 +34,7 @@ public class Reporter extends ConfigLoader {
 	ExtentReports reporter;
 	ExtentTest parent;
 	ExtentTest test;
-	String tableAppender = "";
+	StringBuilder tableAppender;
 
 	static String failStyle = "style=\"background-color: lightcyan;font-size: 17px;color: red;\"";
 	static String passStyle = "style=\"background-color: lightcyan;\"";
@@ -241,8 +241,11 @@ public class Reporter extends ConfigLoader {
 	}
 
 	/**
+	 *
 	 * This method flushes report to the active extent instance.
+	 *
 	 */
+	
 	public void reportFlusher() {
 		log.info("Flushing the HTML report.");
 		reporter.flush();
@@ -273,49 +276,56 @@ public class Reporter extends ConfigLoader {
 	}
 
 	public void createTable(List<String> headers) {
-		tableAppender = "<table><tbody><tr>";
+		tableAppender = new StringBuilder();
+		
+		tableAppender.append("<table><tbody><tr>");
 		for (String header : headers) {
-			tableAppender = tableAppender + insertTh(header);
+			tableAppender.append(insertTh(header));
 		}
-		tableAppender = tableAppender + "</tr>";
+		tableAppender.append("</tr>");
 	}
 
+	
 	public void closeTable() {
-		tableAppender = tableAppender + "</tbody></table>";
-
-		if (tableAppender.contains("Failed") || tableAppender.contains("fail")) {
-			test.fail(tableAppender);
+		tableAppender.append("</tbody></table>");
+		if (tableAppender.toString().contains("Failed") || tableAppender.toString().contains("fail")) {
+			test.fail(tableAppender.toString());
 		} else {
-			test.info(tableAppender);
+			test.info(tableAppender.toString());
 		}
 	}
 
-	public void insertRow(List<String> headers, List<String> rowData) throws Exception {
-
-		if (headers.size() != rowData.size())
-			throw new Exception(
-					"Header and Column sizes do not match.  Make sure the header count matches the column count");
-
-		tableAppender = tableAppender + "<tr>";
-		for (String data : rowData) {
-			tableAppender = tableAppender + insertTd(data);
-		}
-		tableAppender = tableAppender + "</tr>";
-	}
-
+	
 	public void createTable(String expected, String actual, String elementName, String status) {
-		tableAppender = "<table><tbody>" + tableAppender + "<tr>"+insertTh(expected)+insertTh(actual)+ insertTh(elementName)+insertTh(status);
-		tableAppender = tableAppender + "</tr>";
+		tableAppender = new StringBuilder();
+		tableAppender.append("<table><tbody>").append("<tr>"+insertTh(expected)+insertTh(actual)+insertTh(elementName)+insertTh(status)+"</tr>");
 	}
+	
+	public void createTable() {
+			createTable("Expected", "Actual", "Element", "Status");
+	}
+	
+	
 
 	public void insertRow(String expected, String actual, String elementName, String status) {
 
 		if (status.equalsIgnoreCase("fail") || status.equalsIgnoreCase("failed")) {
-			tableAppender = tableAppender + "<tr " + failStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd(status.toUpperCase())+"</tr>";
+			tableAppender.append("<tr " + failStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd(status.toUpperCase())+"</tr>");
 		} else {
-			tableAppender = tableAppender + "<tr " + passStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd(status)+"</tr>";
+			tableAppender.append("<tr " + passStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd(status)+"</tr>");
 		}
 	}
+	
+	public void insertRow(String expected, String actual, String elementName) {
+
+		String temp = verifyEquals(expected, actual);
+		if (temp.equalsIgnoreCase("failed")) {
+			tableAppender.append("<tr " + failStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd(temp.toUpperCase())+"</tr>");
+		} else {
+			tableAppender.append("<tr " + passStyle + ">"+insertTd(expected)+insertTd(actual)+ insertTd(elementName)+insertTd(temp.toUpperCase())+"</tr>");
+		}
+	}
+	
 	
 	private String insertTh(String data) {
 		return "<th style=\"width: 25%;\">"+data+"</th>";
@@ -323,6 +333,15 @@ public class Reporter extends ConfigLoader {
 	
 	private String insertTd(String data) {
 		return "<td style=\"width: 25%;\">"+data+"</td>";
+	}
+	
+	private String verifyEquals(Object expected, Object actual) {
+		
+		if(expected.equals(actual))
+			return "Passed";
+		
+		
+		return "Failed";
 	}
 	
 	
@@ -341,16 +360,6 @@ public class Reporter extends ConfigLoader {
 		row.add("Pravin");
 		row.add("FirstName");
 		row.add("Pass");
-
-		report.insertRow(header, row);
-
-		List<String> row1 = new ArrayList<String>();
-		row1.add("Pravin");
-		row1.add("Pravin");
-		row1.add("FirstName");
-		row1.add("Pass");
-
-		report.insertRow(header, row1);
 
 		report.closeTable();
 
